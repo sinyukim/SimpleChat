@@ -4,9 +4,9 @@ import java.io.*;
 public class ChatClient {
 
 	public static void main(String[] args) {
-		if(args.length != 2){
-			System.out.println("Usage : java ChatClient <username> <server-ip>");
-			System.exit(1);
+		if(args.length != 2){ // 글자가 2개 더 안붙어잇으면
+			System.out.println("Usage : java ChatClient <username> <server-ip>");  //사용법 알려줌
+			System.exit(1);  //끝냄
 		}
 		Socket sock = null;
 		BufferedReader br = null;
@@ -18,17 +18,17 @@ public class ChatClient {
 			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 			// send username.
-			pw.println(args[0]);
-			pw.flush();
+			pw.println(args[0]); //thread 한테 보냄
+			pw.flush(); 
 			InputThread it = new InputThread(sock, br);
 			it.start();
 			String line = null;
 			while((line = keyboard.readLine()) != null){
-				pw.println(line);
+				pw.println(line); //line을 pw에 보냄
 				pw.flush();
-				if(line.equals("/quit")){
+				if(line.equals("/quit")){ // "/quit"이면
 					endflag = true;
-					break;
+					break; //끝냄
 				}
 			}
 			System.out.println("Connection closed.");
