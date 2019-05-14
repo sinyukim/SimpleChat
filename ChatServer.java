@@ -8,19 +8,19 @@ public class ChatServer {
 		try{
 			ServerSocket server = new ServerSocket(10001);
 			System.out.println("Waiting connection...");
-			HashMap hm = new HashMap();
+			HashMap hm = new HashMap(); //HashMap이라는 객체 생성(짝으로 저장(키,오브젝트))
 			while(true){
 				Socket sock = server.accept();
 				ChatThread chatthread = new ChatThread(sock, hm);
-				chatthread.start();
-			} // while
+				chatthread.start(); //분신술 성공 // run을 부름
+			} // while //여기까지가 main이 하는일
 		}catch(Exception e){
 			System.out.println(e);
 		}
 	} // main
 }
 
-class ChatThread extends Thread{
+class ChatThread extends Thread{ //Thread손오공
 	private Socket sock;
 	private String id;
 	private BufferedReader br;
@@ -34,7 +34,7 @@ class ChatThread extends Thread{
 			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			id = br.readLine();
 			broadcast(id + " entered.");
-			System.out.println("[Server] User (" + id + ") entered.");
+			System.out.println("[Server] User (" + id + ") entered."); //자기 화면에 누가 들어왓다고 print
 			synchronized(hm){
 				hm.put(this.id, pw);
 			}
@@ -47,13 +47,13 @@ class ChatThread extends Thread{
 		try{
 			String line = null;
 			while((line = br.readLine()) != null){
-				if(line.equals("/quit"))
+				if(line.equals("/quit")) // "/quit"입력시 run 종료
 					break;
-				if(line.indexOf("/to ") == 0){
+				if(line.indexOf("/to ") == 0){ // "/to"로 들어오면 sendmsg (ex)/to kim 뭬롱
 					sendmsg(line);
 				}else
 					broadcast(id + " : " + line);
-			}
+			}  //주요
 		}catch(Exception ex){
 			System.out.println(ex);
 		}finally{
@@ -68,22 +68,22 @@ class ChatThread extends Thread{
 		}
 	} // run
 	public void sendmsg(String msg){
-		int start = msg.indexOf(" ") +1;
-		int end = msg.indexOf(" ", start);
+		int start = msg.indexOf(" ") +1; 
+		int end = msg.indexOf(" ", start); //이름과 대화내용 구분
 		if(end != -1){
 			String to = msg.substring(start, end);
 			String msg2 = msg.substring(end+1);
-			Object obj = hm.get(to);
+			Object obj = hm.get(to); //to이름을 가진 map
 			if(obj != null){
 				PrintWriter pw = (PrintWriter)obj;
-				pw.println(id + " whisphered. : " + msg2);
+				pw.println(id + " whisphered. : " + msg2); //쓰기
 				pw.flush();
 			} // if
 		}
 	} // sendmsg
 	public void broadcast(String msg){
-		synchronized(hm){
-			Collection collection = hm.values();
+		synchronized(hm){ //무엇?!?!
+			Collection collection = hm.values(); //Hashmap의 모든값
 			Iterator iter = collection.iterator();
 			while(iter.hasNext()){
 				PrintWriter pw = (PrintWriter)iter.next();
