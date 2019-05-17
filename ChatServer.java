@@ -6,12 +6,12 @@ public class ChatServer {
 
 	public static void main(String[] args) {
 		try{
-			ServerSocket server = new ServerSocket(10001);
-			System.out.println("Waiting connection...");
+			ServerSocket server = new ServerSocket(10001); //"server를 지정(10001)소켓이라고 한다"
+			System.out.println("Waiting connection...");   //"Waiting connection... 이라는 말을 보여준다"
 			HashMap hm = new HashMap(); //HashMap이라는 객체 생성(짝으로 저장(키,오브젝트))
-			while(true){
-				Socket sock = server.accept();
-				ChatThread chatthread = new ChatThread(sock, hm);
+			while(true){ //"true이니 계속 돌린다"
+				Socket sock = server.accept(); //"server.accept()를 통해서 서버소켓을 받은 후 sock에 저장 / server대기" 
+				ChatThread chatthread = new ChatThread(sock, hm);/////////////////////////////////////////
 				chatthread.start(); //분신술 성공 // run을 부름
 			} // while //여기까지가 main이 하는일
 		}catch(Exception e){
