@@ -13,12 +13,12 @@ public class ChatClient {
 		PrintWriter pw = null;
 		boolean endflag = false;
 		try{
-			sock = new Socket(args[1], 10001);
-			pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
-			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+			sock = new Socket(args[1], 10001);   //"null이엿던 sock -> Socker(args[1], 10001)"
+			pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));  //" pw = 새로운 PrintWriter(byte단위를 char형태로씀(sock쓰기)"
+			br = new BufferedReader(new InputStreamReader(sock.getInputStream())); // " br = buffering char-input stream(byte단위를 char형태로읽음(sock읽기)"
+			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); //"새BufferedReader keyboard = system에서 받은 값을 char로 전환 후 BufferedReader형태로"
 			// send username.
-			pw.println(args[0]); //thread 한테 보냄
+			pw.println(args[0]); //thread 한테 보냄/////////////////////////////////////////
 			pw.flush(); 
 			InputThread it = new InputThread(sock, br);
 			it.start();
