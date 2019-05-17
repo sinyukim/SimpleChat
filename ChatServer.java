@@ -36,11 +36,11 @@ class ChatThread extends Thread{ //Thread손오공
 			broadcast(id + " entered.");
 			System.out.println("[Server] User (" + id + ") entered."); //자기 화면에 누가 들어왓다고 print
 			synchronized(hm){
-				hm.put(this.id, pw);
+				hm.put(this.id, pw); //"this.id라는 key를 pw value에 mapping함"
 			}
 			initFlag = true;
 		}catch(Exception ex){
-			System.out.println(ex);
+			System.out.println(ex);  //"
 		}
 	} // construcor
 	public void run(){
@@ -58,12 +58,12 @@ class ChatThread extends Thread{ //Thread손오공
 			System.out.println(ex);
 		}finally{
 			synchronized(hm){
-				hm.remove(id);
+				hm.remove(id); 
 			}
-			broadcast(id + " exited.");
+			broadcast(id + " exited."); //"id + exited.라는 문구를 다른 user들에게 출력한다"
 			try{
-				if(sock != null)
-					sock.close();
+				if(sock != null) //"sock라는 소켓이 null이 아니면"
+					sock.close(); //"sock라는 소켓객체를 닫는다"
 			}catch(Exception ex){}
 		}
 	} // run
@@ -82,13 +82,13 @@ class ChatThread extends Thread{ //Thread손오공
 		}
 	} // sendmsg
 	public void broadcast(String msg){
-		synchronized(hm){ //무엇?!?!
+		synchronized(hm){ //동기화
 			Collection collection = hm.values(); //Hashmap의 모든값
-			Iterator iter = collection.iterator();
-			while(iter.hasNext()){
-				PrintWriter pw = (PrintWriter)iter.next();
-				pw.println(msg);
-				pw.flush();
+			Iterator iter = collection.iterator(); //"collection의 값을 interate"
+			while(iter.hasNext()){ //"iter가 다음이 있을 때"
+				PrintWriter pw = (PrintWriter)iter.next(); //"pw는 iter.next를 PrintWriter 형식으로"
+				pw.println(msg); //"pw출력"
+				pw.flush(); //"데이터 내보내기"
 			}
 		}
 	} // broadcast
