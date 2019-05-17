@@ -19,20 +19,20 @@ public class ChatClient {
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in)); //"새BufferedReader keyboard = system에서 받은 값을 char로 전환 후 BufferedReader형태로"
 			// send username.
 			pw.println(args[0]); //thread 한테 보냄/////////////////////////////////////////
-			pw.flush(); 
-			InputThread it = new InputThread(sock, br);
-			it.start();
-			String line = null;
-			while((line = keyboard.readLine()) != null){
+			pw.flush();  //"stream에 남아있는 데이터를 내보냄"
+			InputThread it = new InputThread(sock, br); //"it라는 InputThread의 소켓은sock, BufferedReader는 br"
+			it.start(); //"it를 시작"
+			String line = null; 
+			while((line = keyboard.readLine()) != null){ //"keyboard로부터 입력값이 있으면"
 				pw.println(line); //line을 pw에 보냄
-				pw.flush();
+				pw.flush(); //"데이터 내보냄"
 				if(line.equals("/quit")){ // "/quit"이면
 					endflag = true;
 					break; //끝냄
 				}
 			}
-			System.out.println("Connection closed.");
-		}catch(Exception ex){
+			System.out.println("Connection closed."); //"Connection closed. 출력"
+		}catch(Exception ex){ 
 			if(!endflag)
 				System.out.println(ex);
 		}finally{
@@ -62,8 +62,8 @@ class InputThread extends Thread{
 	public void run(){
 		try{
 			String line = null;
-			while((line = br.readLine()) != null){
-				System.out.println(line);
+			while((line = br.readLine()) != null){ 
+				System.out.println(line); //"line출력"
 			}
 		}catch(Exception ex){
 		}finally{
