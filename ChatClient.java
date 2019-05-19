@@ -10,7 +10,7 @@ public class ChatClient {
 		}
 		Socket sock = null;
 		BufferedReader br = null;
-		PrintWriter pw = null;
+		PrintWriter pw = null;  //"PrintWriter == 파일을 만들어 입력받고 파일 내용을 출력"
 		boolean endflag = false;
 		try{
 			sock = new Socket(args[1], 10001);   //"null이엿던 sock -> Socker(args[1], 10001)"
