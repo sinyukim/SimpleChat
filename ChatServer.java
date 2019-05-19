@@ -23,7 +23,7 @@ public class ChatServer {
 class ChatThread extends Thread{ //Thread손오공
 	private Socket sock;
 	private String id;
-	private BufferedReader br;
+	private BufferedReader br; //"BufferedReader == read text
 	private HashMap hm;
 	private boolean initFlag = false;
 	public ChatThread(Socket sock, HashMap hm){
