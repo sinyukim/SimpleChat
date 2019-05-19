@@ -37,16 +37,16 @@ public class ChatClient {
 				System.out.println(ex);
 		}finally{
 			try{
-				if(pw != null)
-					pw.close();
+				if(pw != null)  //"pw가 null이 아니면"
+					pw.close();  //"pw닫기"
 			}catch(Exception ex){}
 			try{
-				if(br != null)
-					br.close();
+				if(br != null)  //"br이 null이 아니면"
+					br.close(); //"br닫기"
 			}catch(Exception ex){}
 			try{
-				if(sock != null)
-					sock.close();
+				if(sock != null) //"sock이 null이 아니면"
+					sock.close();  //"sock 닫기"
 			}catch(Exception ex){}
 		} // finally
 	} // main
@@ -62,18 +62,18 @@ class InputThread extends Thread{
 	public void run(){
 		try{
 			String line = null;
-			while((line = br.readLine()) != null){ 
+			while((line = br.readLine()) != null){ //"line이 있으면"
 				System.out.println(line); //"line출력"
 			}
 		}catch(Exception ex){
 		}finally{
 			try{
-				if(br != null)
-					br.close();
+				if(br != null) //"br이 null이 아니면"
+					br.close(); //"br닫기"
 			}catch(Exception ex){}
 			try{
-				if(sock != null)
-					sock.close();
+				if(sock != null) //"sock이 null이 아니면"
+					sock.close(); //"sock 닫기"
 			}catch(Exception ex){}
 		}
 	} // InputThread
