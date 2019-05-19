@@ -11,11 +11,11 @@ public class ChatServer {
 			HashMap hm = new HashMap(); //HashMap이라는 객체 생성(짝으로 저장(키,오브젝트))
 			while(true){ //"true이니 계속 돌린다"
 				Socket sock = server.accept(); //"server.accept()를 통해서 서버소켓을 받은 후 sock에 저장 / server대기" 
-				ChatThread chatthread = new ChatThread(sock, hm);/////////////////////////////////////////
+				ChatThread chatthread = new ChatThread(sock, hm); //"받은 sock과 만들엇던 hm을 chatthread로 
 				chatthread.start(); //분신술 성공 // run을 부름
 			} // while //여기까지가 main이 하는일
 		}catch(Exception e){
-			System.out.println(e);
+			System.out.println(e); //"error 출력"
 		}
 	} // main
 }
@@ -30,13 +30,13 @@ class ChatThread extends Thread{ //Thread손오공
 		this.sock = sock;
 		this.hm = hm;
 		try{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
-			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			id = br.readLine();
-			broadcast(id + " entered.");
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream())); //" pw = 새로운 PrintWriter(byte단위를 char형태로씀(sock쓰기)"
+			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));  //" br = buffering char-input stream(byte단위를 char형태로읽음(sock읽기)"
+			id = br.readLine(); //" id = br에서부터 읽은 것
+			broadcast(id + " entered.");  //"id가 들어왓다는 것을 알림"
 			System.out.println("[Server] User (" + id + ") entered."); //자기 화면에 누가 들어왓다고 print
-			synchronized(hm){
-				hm.put(this.id, pw); //"this.id라는 key를 pw value에 mapping함"
+			synchronized(hm){ //"hm 동기화"
+				hm.put(this.id, pw); //"this.id라는 key를 pw value에 mapping함 / 새 user"
 			}
 			initFlag = true;
 		}catch(Exception ex){
@@ -52,13 +52,13 @@ class ChatThread extends Thread{ //Thread손오공
 				if(line.indexOf("/to ") == 0){ // "/to"로 들어오면 sendmsg (ex)/to kim 뭬롱
 					sendmsg(line);
 				}else
-					broadcast(id + " : " + line);
+					broadcast(id + " : " + line); //"to나 /quit가 아닐시 id : + line을 broadcast"
 			}  //주요
 		}catch(Exception ex){
 			System.out.println(ex);
 		}finally{
 			synchronized(hm){
-				hm.remove(id); 
+				hm.remove(id);  //"hm에서 id삭제
 			}
 			broadcast(id + " exited."); //"id + exited.라는 문구를 다른 user들에게 출력한다"
 			try{
