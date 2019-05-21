@@ -8,7 +8,7 @@ public class ChatServer {
 		try{
 			ServerSocket server = new ServerSocket(10001); //"server를 지정(10001)소켓이라고 한다"
 			System.out.println("Waiting connection...");   //"Waiting connection... 이라는 말을 보여준다"
-			HashMap hm = new HashMap(); //HashMap이라는 객체 생성(짝으로 저장(키,오브젝트))
+			HashMap hm = new HashMap(); //HashMap이라는 객체 생성(짝으로 저장(키,오브젝트)) /HashMap<String, PrintWriter>
 			while(true){ //"true이니 계속 돌린다"
 				Socket sock = server.accept(); //"server.accept()를 통해서 서버소켓을 받은 후 sock에 저장 / server대기" 
 				ChatThread chatthread = new ChatThread(sock, hm); //"받은 sock과 만들엇던 hm을 chatthread로 
