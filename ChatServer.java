@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class ChatServer {
+public class ChatServer { //ChatServer는 객체없음,  불러줘야 돌아감
 
 	public static void main(String[] args) {
 		try{
@@ -28,14 +28,15 @@ class ChatThread extends Thread{ //Thread손오공
 	private boolean initFlag = false;
 	public ChatThread(Socket sock, HashMap hm){
 		this.sock = sock;
-		this.hm = hm;
+		this.hm = hm;  //실체x, 주소를 가져옴
 		try{
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream())); //" pw = 새로운 PrintWriter(byte단위를 char형태로씀(sock쓰기)"
 			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));  //" br = buffering char-input stream(byte단위를 char형태로읽음(sock읽기)"
 			id = br.readLine(); //" id = br에서부터 읽은 것
+			//중복이름 확인
 			broadcast(id + " entered.");  //"id가 들어왓다는 것을 알림"
 			System.out.println("[Server] User (" + id + ") entered."); //자기 화면에 누가 들어왓다고 print
-			synchronized(hm){ //"hm 동기화"
+			synchronized(hm){ //"hm 동기화" //줄 세우기
 				hm.put(this.id, pw); //"this.id라는 key를 pw value에 mapping함 / 새 user"
 			}
 			initFlag = true;
