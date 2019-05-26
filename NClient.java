@@ -1,12 +1,14 @@
+//    https://github.com/sinyukim/SimpleChat.git
+
 import java.net.*;
 import java.io.*;
 
-public class ChatClient {
+public class NClient {
 
 	public static void main(String[] args) {
-		if(args.length != 2){ 
-			System.out.println("Usage : java ChatClient <username> <server-ip>"); 
-			System.exit(1);  
+		if(args.length != 2){
+			System.out.println("Usage : java ChatClient <username> <server-ip>");
+			System.exit(1);
 		}
 		Socket sock = null;
 		BufferedReader br = null;
@@ -18,17 +20,17 @@ public class ChatClient {
 			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 			// send username.
-			pw.println(args[0]); 
-			pw.flush(); 
+			pw.println(args[0]);
+			pw.flush();
 			InputThread it = new InputThread(sock, br);
 			it.start();
 			String line = null;
 			while((line = keyboard.readLine()) != null){
-				pw.println(line); 
+				pw.println(line);
 				pw.flush();
 				if(line.equals("/quit")){
 					endflag = true;
-					break; 
+					break;
 				}
 			}
 			System.out.println("Connection closed.");
