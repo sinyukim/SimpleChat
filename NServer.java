@@ -55,7 +55,7 @@ class ChatThread extends Thread{
 					if(line.contains(banword[0]) || line.contains(banword[1]) || line.contains(banword[2]) || line.contains(banword[3]) || line.contains(banword[4])){
 						    PrintWriter a = (PrintWriter)hm.get(id);
 						    a.println("!!You have used inappropriate word!!");
-                a.flush();
+                                                    a.flush();
 
 
 			 }else if(line.equals("/quit")){
