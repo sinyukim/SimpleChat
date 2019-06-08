@@ -1,9 +1,8 @@
-
 import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class NewS {
+public class ChatServer {
 
 	public static void main(String[] args) {
 		try{
@@ -13,7 +12,7 @@ public class NewS {
 			while(true){
 				Socket sock = server.accept();
 				ChatThread chatthread = new ChatThread(sock, hm);
-//
+// 뭔가를 물어본다... 예를 들어 클라이언트 아이디를..
 				chatthread.start();
 			} // while
 		}catch(Exception e){
@@ -28,7 +27,6 @@ class ChatThread extends Thread{
 	private BufferedReader br;
 	private HashMap hm;
 	private boolean initFlag = false;
-  String[] word = {"Fuck", "shit","bitch","FUCK","bastart"};
 	public ChatThread(Socket sock, HashMap hm){
 		this.sock = sock;
 		this.hm = hm;
@@ -51,10 +49,9 @@ class ChatThread extends Thread{
 			String line = null;
 			String str = null;
 			while((line = br.readLine()) != null){
-				if(line.equals("/quit")){
+				if(line.equals("/quit"))
 					break;
-        }
-				else if((str = checkword(line))!= null){
+				if((str = checkword(line))!= null){
 					warning(str);
 				}
 				else if(line.equals("/userlist")){
@@ -62,16 +59,9 @@ class ChatThread extends Thread{
 				}
 				else if(line.indexOf("/to ") == 0){
 					sendmsg(line);
-				}
-        else if(line.equals("/spamlist")){
-          spamlist();
-        }
-        else if(line.indexOf("/addspam ") == 0){
-          addspam(line);
-        }else
+				}else
 					broadcast(id + " : " + line);
 			}
-
 		}catch(Exception ex){
 			System.out.println(ex);
 		}finally{
@@ -106,71 +96,32 @@ class ChatThread extends Thread{
 		j--;
 		pw.println("Total : "+j+".");
 		pw.flush();
-	       /*
-	       Object o = hm.get(id);
+		/*
+		Object o = hm.get(id);
 	  	PrintWriter p1 = (PrintWriter)o;
 
 
-      Set keyset = hm.keySet();
-      int num = keyset.size();
+     		 Set keyset = hm.keySet();
+    		 int num = keyset.size();
 
-			 p1.println("\n" +keyset);
-			 p1.flush();
+		 p1.println("\n" +keyset);
+		 p1.flush();
 
 
 		 p1.println("\nNumber(s) of user is : " + num);
-		 p1.flush();
+		 p1.flush()
 		 */
 	}
 
 	public String checkword(String msg){
 		int b = 1;
-	///////////////////////////
+		String[] word ={"바보","멍청이","병신","놈","새끼"};
 		for(int i=0;i<word.length;i++){
 			if(msg.contains(word[i]))
 				return word[i];
 		}
 		return null;
 	}
-
-  public void spamlist(){
-
-      Object obj = hm.get(id);
-      PrintWriter pw = (PrintWriter)obj;
-      //pw.println("\n");
-      for(int i=0;i<word.length;i++){
-      //  pw.println(word.length);
-      pw.println(i+1+ "." +word[i]);
-      pw.flush();
-    }
-}
-
-public void addspam(String msg){
-  Object obj = hm.get(id);
-  PrintWriter pw = (PrintWriter)obj;
-
-  int start = msg.indexOf(" ") + 1;
-  int end = msg.indexOf(".",start);
-  //pw.println(start+" "+end);
-
-  String w = msg.substring(start,end);
-
-int currentSize =word.length;
-int newSize = currentSize + 1;
-String[] tempArray = new String[ newSize ];
-
-for (int i=0; i < currentSize; i++)
-{
-    tempArray[i] =word[i];
-}
-
-tempArray[newSize- 1] = w;
-word = tempArray;
-
-
-
-}
-
 	public void warning(String msg){
 		Object obj = hm.get(id);
 		if(obj != null){
