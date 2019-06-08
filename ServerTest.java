@@ -106,6 +106,21 @@ class ChatThread extends Thread{
 		j--;
 		pw.println("Total : "+j+".");
 		pw.flush();
+	       /*
+	       Object o = hm.get(id);
+	  	PrintWriter p1 = (PrintWriter)o;
+
+
+      Set keyset = hm.keySet();
+      int num = keyset.size();
+
+			 p1.println("\n" +keyset);
+			 p1.flush();
+
+
+		 p1.println("\nNumber(s) of user is : " + num);
+		 p1.flush();
+		 */
 	}
 
 	public String checkword(String msg){
